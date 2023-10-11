@@ -1,0 +1,12 @@
+numpy
+scipy
+matplotlib
+pandas
+tqdm
+scikit-learn
+seaborn
+
+# 2022/12/11 version torch for torch 1.13.0 and cuda 11.7
+#torch
+#torchvision
+#torchaudio

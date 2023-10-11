@@ -1,0 +1,36 @@
+version: '3'
+services: 
+  gpoptim_jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      #args:
+      #  - UID=${UID} # user id とgroup idを設定する．whoami \ id <name> でわかる
+      #  - GID=${GID}
+    #restart:
+    #network_mode: "host"
+    tty: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    ports:  # host id : container id
+      - "8888:8888"
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      #- /home/$USERNAME:/home/user
+      - ./src:/home/user/jupyter_ws/src
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    entrypoint: >
+        jupyter-lab
+        --ip 0.0.0.0
+        --no-browser
+        --allow-root
+        --port=8888
+        --NotebookApp.token='hoge'
+        --notebook-dir=/home/user/jupyter_ws
+    
